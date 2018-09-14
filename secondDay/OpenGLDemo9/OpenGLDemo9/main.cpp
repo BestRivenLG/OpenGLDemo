@@ -134,6 +134,27 @@ void setupRC()
     floorBatch.End();
 }
 
+void specialKey(int key, int x, int y){
+    float linar = 0.1f;
+    float angular = float(m3dDegToRad(5.0f));
+
+    if (key == GLUT_KEY_UP) {
+        cameraFrame.MoveForward(linar);
+    }
+    
+    if (key == GLUT_KEY_DOWN) {
+        cameraFrame.MoveForward(-linar);
+    }
+    
+    if (key == GLUT_KEY_LEFT) {
+        cameraFrame.RotateWorld(angular, 0, 1.0f, 0);
+    }
+    
+    if (key == GLUT_KEY_RIGHT) {
+        cameraFrame.RotateWorld(angular, 0, -1.0f, 0);
+    }
+}
+
 int main(int argc,char *argv[]){
     gltSetWorkingDirectory(argv[0]);
     glutInit(&argc, argv);
@@ -143,7 +164,7 @@ int main(int argc,char *argv[]){
 
     glutReshapeFunc(ChangeSize);
     glutDisplayFunc(display);
-    
+    glutSpecialFunc(specialKey);
     GLenum status = glewInit();
     if (GLEW_OK != status) {
         fprintf(stderr, "GLEW Error: %s\n", glewGetErrorString(status));
